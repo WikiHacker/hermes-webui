@@ -611,31 +611,33 @@
       border-radius: var(--radius);
       overflow: hidden;
       background: #0d1117;
-      border: 1px solid var(--border);
+      border: 1px solid #30363d;
       margin: 8px 0;
     }
+    /* Code blocks stay dark in both themes — switching hljs to light-on-dark causes invisible text */
     [data-theme="light"] .code-wrap {
-      background: #161b22;
+      background: #0d1117;
+      border-color: #30363d;
     }
     .code-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 8px 16px;
-      background: rgba(255,255,255,0.04);
-      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      border-bottom: 1px solid #30363d;
     }
     .code-lang {
       font-size: 0.7rem;
       font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #8b949e;
     }
     .copy-btn {
       background: none;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
+      border: 1px solid #484f58;
+      color: #8b949e;
       font-size: 0.7rem;
       padding: 3px 8px;
       border-radius: 4px;
@@ -643,8 +645,8 @@
       transition: color 0.15s, border-color 0.15s;
       font-family: inherit;
     }
-    .copy-btn:hover { color: var(--text-primary); border-color: var(--border-hover); }
-    .copy-btn.copied { color: var(--green); border-color: var(--green); }
+    .copy-btn:hover { color: #e6edf3; border-color: #8b949e; }
+    .copy-btn.copied { color: #3fb950; border-color: #3fb950; }
     .code-wrap pre {
       margin: 0;
       padding: 16px;
@@ -657,6 +659,39 @@
     }
 
     /* ===== COMPARISON ===== */
+    .compare-more {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .compare-more-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .compare-more-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .compare-pill {
+      display: inline-block;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .compare-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-subtle);
+    }
     .comparison-intro {
       font-size: 1rem;
       color: var(--text-secondary);
@@ -727,7 +762,18 @@
       padding: 24px;
       transition: border-color 0.2s;
     }
-    .comparison-card:hover { border-color: var(--border-hover); }
+    .comparison-card:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+    .comparison-card[role="link"]:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .card-arrow {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      transition: transform 0.15s, color 0.15s;
+    }
+    .comparison-card[role="link"] { position: relative; }
+    .comparison-card[role="link"]:hover .card-arrow { transform: translateX(4px); color: var(--accent); }
     .comparison-card h4 {
       font-size: 0.95rem;
       font-weight: 600;
@@ -1425,34 +1471,52 @@ docker run -d \
       <h3 class="subsection-title mt-32">Head-to-head</h3>
       <div class="comparison-cards">
 
-        <div class="comparison-card">
+        <div class="comparison-card" onclick="location.href='compare/openclaw.html'" role="link" tabindex="0" aria-label="Compare Hermes vs OpenClaw in detail" style="cursor:pointer">
+          <div class="card-arrow">→</div>
           <h4>Hermes vs. OpenClaw</h4>
           <p>
             OpenClaw (MIT, ~350k+ GitHub stars) is the closest comparison — open-source, self-hosted, always-on, with persistent memory, cron scheduling, and messaging. OpenClaw has the widest messaging surface (24+ platforms, including iMessage, LINE, WeChat, Teams) and native Chrome CDP browser control. Hermes wins on stability (OpenClaw has documented Telegram regressions through April 2026) and security — three separate 2026 audits found malicious skills in ClawHub, with Koi Security linking 335 packages to the "ClawHavoc" campaign and Bitdefender flagging ~900 malicious packages (~20% of the ecosystem). Hermes writes skills automatically; OpenClaw centers on a human-curated marketplace. Hermes also runs in the Python/ML ecosystem; OpenClaw is Node.js.
           </p>
         </div>
 
-        <div class="comparison-card">
+        <div class="comparison-card" onclick="location.href='compare/claude-code.html'" role="link" tabindex="0" aria-label="Compare Hermes vs Claude Code in detail" style="cursor:pointer">
+          <div class="card-arrow">→</div>
           <h4>Hermes vs. Claude Code</h4>
           <p>
             Claude Code is Anthropic's official agentic tool, strong for focused coding sessions. It has a 26-event hooks system, a plugin/skills marketplace, CLAUDE.md/MEMORY.md project memory, and cloud-managed scheduling on Anthropic infrastructure. Research-preview messaging covers Telegram, Discord, and iMessage; Slack is not yet shipped. The key differences: cloud scheduling runs on Anthropic's infrastructure (data leaves your hardware; desktop app tasks run locally but require the app open), it's locked to Claude models, and it's not open source. Hermes can spawn Claude Code as a sub-agent for heavy implementation tasks — they're complementary.
           </p>
         </div>
 
-        <div class="comparison-card">
+        <div class="comparison-card" onclick="location.href='compare/cursor.html'" role="link" tabindex="0" aria-label="Compare Hermes vs Cursor in detail" style="cursor:pointer">
+          <div class="card-arrow">→</div>
           <h4>Hermes vs. Cursor</h4>
           <p>
             Cursor has changed substantially. Per-project Memories shipped June 2025. Automations launched March 2026 — time-based, event-based, Slack-triggered background agents. v3.0 (April 2026) went agent-first. It's now valued at $29.3B. Cursor is excellent at what it does. But its agents run on cloud VMs with no data sovereignty. Hermes runs on your server, accumulates context across all your projects (not per-project), works with any model family, and is reachable from every surface you use — not just the editor.
           </p>
         </div>
 
-        <div class="comparison-card">
+        <div class="comparison-card" onclick="location.href='compare/claude-ai.html'" role="link" tabindex="0" aria-label="Compare Hermes vs Claude.ai and ChatGPT in detail" style="cursor:pointer">
+          <div class="card-arrow">→</div>
           <h4>Hermes vs. Claude.ai / ChatGPT</h4>
           <p>
             Both are capable and no longer just chat tools. Claude Cowork added scheduling (Feb 2026) and 50+ connectors including Slack. ChatGPT has Agent Mode (July 2025), Scheduled Tasks, a computer-using agent, and 50+ connectors. The fundamental issue isn't features — it's where execution lives. Neither is self-hosted. Memory, sessions, and scheduled tasks run on their servers. For workflows requiring data sovereignty, server-resident execution, or provider flexibility, that's a hard constraint with no workaround.
           </p>
         </div>
 
+      </div>
+
+      <div class="compare-more">
+        <p class="compare-more-label">More comparisons</p>
+        <div class="compare-more-links">
+          <a href="compare/openclaw.html" class="compare-pill">vs. OpenClaw</a>
+          <a href="compare/claude-code.html" class="compare-pill">vs. Claude Code</a>
+          <a href="compare/codex.html" class="compare-pill">vs. Codex CLI</a>
+          <a href="compare/opencode.html" class="compare-pill">vs. OpenCode</a>
+          <a href="compare/cursor.html" class="compare-pill">vs. Cursor</a>
+          <a href="compare/copilot.html" class="compare-pill">vs. GitHub Copilot</a>
+          <a href="compare/claude-ai.html" class="compare-pill">vs. Claude.ai</a>
+          <a href="compare/chatgpt.html" class="compare-pill">vs. ChatGPT</a>
+        </div>
       </div>
     </div>
   </section>
@@ -1737,12 +1801,11 @@ hermes doctor         # diagnose any issues</code></pre>
   function setTheme(theme) {
     html.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
+    // Code blocks are always dark-styled; hljs stays on github-dark regardless of theme
     if (theme === 'light') {
       themeToggle.textContent = '🌙';
-      hljsTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css';
     } else {
       themeToggle.textContent = '☀️';
-      hljsTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css';
     }
   }
 
@@ -1814,6 +1877,16 @@ hermes doctor         # diagnose any issues</code></pre>
       }, 2000);
     });
   }
+
+  // ===== KEYBOARD NAV FOR CLICKABLE CARDS =====
+  document.querySelectorAll('.comparison-card[role="link"]').forEach(function(card) {
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
 
   // ===== SMOOTH SCROLL (for older browsers) =====
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
